@@ -10,19 +10,19 @@ class DatabaseManager:
         try:
             for value in Session.query(UserDatabase).all():
                 result = value
-            for k, v in result.__dict__.items():
-                try:
-                    result.__dict__[k] = json.loads(v)
-                except Exception as e:
-                    print(f"ERR Key {k} Value {v}")
-                    print(f"ERROR {e}")
+                for k, v in result.__dict__.items():
+                    try:
+                        result.__dict__[k] = json.loads(v)
+                    except Exception as e:
+                        print(f"ERR Key {k} Value {v}")
+                        print(f"ERROR {e}")
 
-            # Remove the item with key "b"
-            if "_sa_instance_state" in result.__dict__:
-                del result.__dict__["_sa_instance_state"]
-                results.append(result.__dict__)
-            else:
-                results.append(result.__dict__)
+                # Remove the item with key "b"
+                if "_sa_instance_state" in result.__dict__:
+                    del result.__dict__["_sa_instance_state"]
+                    results.append(result.__dict__)
+                else:
+                    results.append(result.__dict__)
             return {"message": "All users gotten sucssessfully", "status": True, "result": results}
         except Exception as e:
             return {"message": f"{e}", "status": False, "result": None}
@@ -52,7 +52,7 @@ class DatabaseManager:
     def createUser(userModel:UserModel):
         try:
             user = DatabaseManager.getUserByEmail(email=userModel.email)
-            if user is None:
+            if not user["status"]:
                 Session.add(UserDatabase(userModel))
                 Session.commit()
                 return {"message": "User was added sucssessfully", "status": True, "result": userModel.toDict()}
