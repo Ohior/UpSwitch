@@ -3,8 +3,8 @@
 
 ### Flask ###
 instance/*
-!instance/.gitignore
 .webassets-cache
+!instance/.gitignore
 .env
 
 ### Flask.Python Stack ###
