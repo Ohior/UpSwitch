@@ -1,8 +1,7 @@
 from datetime import datetime
-from sqlalchemy import String, Column, Integer, DateTime, create_engine
+from sqlalchemy import Boolean, String, Column, Integer, DateTime, create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
 from models.user_model import UserModel
 
 _engine = create_engine("sqlite:///apidatabase.db", echo=True)
@@ -26,12 +25,20 @@ class UserDatabase(Base):
     userId = Column(String())
     email = Column(String())
     password = Column(String())
+    firstName = Column(String())
+    lastName = Column(String())
+    isAuth = Column(Boolean())
+    isLogIn = Column(Boolean())
     datatime = Column(DateTime(), default=datetime.utcnow())
 
     def __init__(self, user_model: UserModel):
         self.email = user_model.email
         self.password = user_model.password
         self.userId = user_model.userId
+        self.firstName = user_model.firstName
+        self.lastName = user_model.lastName
+        self.isAuth = user_model.isAuth
+        self.isLogIn = user_model.isLogIn
 
     def __repr__(self):
         return f'''

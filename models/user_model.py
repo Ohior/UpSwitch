@@ -5,10 +5,14 @@ from sqlalchemy import DateTime
 
 @dataclass
 class UserModel:
-    userId: str = None 
     email: str = None
+    userId: str = None
+    isAuth: bool = False
+    isLogIn: bool = False
     password: str = None
     datatime: DateTime = None
+    lastName: str = None
+    firstName: str = None
 
     def toDict(self):
         return asdict(self)
@@ -20,5 +24,9 @@ class UserModel:
                 email = {self.email}
                 password = {self.password}
                 datatime = {self.datatime}
+                firstName = {self.firstName}
+                lastName = {self.lastName}
+                isLogIn = {self.isLogIn}
+                isAuth = {self.isAuth}
             )
         '''
